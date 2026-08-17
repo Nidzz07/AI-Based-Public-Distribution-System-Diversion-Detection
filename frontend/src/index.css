@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* The app's inherited text colour is ink, NOT navy. This one line is the
+     checklist's first rule made structural: anything that forgets to set a
+     colour now falls back to body text instead of to heading colour, so a
+     missed class reads as a small mistake rather than as another navy
+     paragraph flattening the hierarchy. Navy is applied deliberately, per
+     heading, and never inherited. */
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+  }
+
+  /* One focus ring, defined once, for every focusable thing in the app —
+     including the native <select> and <textarea>, which cannot be reached by
+     a utility class on a wrapper. :focus-visible rather than :focus so a
+     mouse click does not leave a ring behind, but every keyboard tab does.
+
+     Navy at 2px with a 2px offset reads clearly on both the bg cream and the
+     white cards, and on the navy sidebar the offset lets the ring sit against
+     the dark ground. No page may override this with focus:outline-none. */
+  :focus-visible {
+    outline: 2px solid theme('colors.navy');
+    outline-offset: 2px;
+    border-radius: theme('borderRadius.DEFAULT');
+  }
+
+  /* The sidebar is navy on navy, so the ring switches to white there. */
+  aside :focus-visible {
+    outline-color: theme('colors.white');
+  }
+
+  /* Tabular figures everywhere a number is read as data rather than as prose.
+     Scores, variances, kilograms and timestamps all sit in columns that a
+     reader compares vertically; proportional digits make 11,015 and 10,980
+     different widths and the comparison stops working. Applied globally here
+     so no page has to remember it. */
+  table,
+  th,
+  td,
+  time,
+  output,
+  meter,
+  progress,
+  .num,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+}

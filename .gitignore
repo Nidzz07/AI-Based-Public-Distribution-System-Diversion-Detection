@@ -1,0 +1,12 @@
+# backend/leakproof.db is NOT ignored. It is committed on purpose so a clone
+# demos the same 60 shops without running seed.py first.
+
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+node_modules/
+frontend/dist/
+
+.DS_Store

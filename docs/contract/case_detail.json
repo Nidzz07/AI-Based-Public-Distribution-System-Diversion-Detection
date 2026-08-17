@@ -1,0 +1,149 @@
+{
+  "case_id": "C-0041",
+  "shop": {
+    "id": "4521",
+    "name": "FPS Sitapur-12",
+    "block": "Sitapur",
+    "lat": 27.57,
+    "lng": 80.68
+  },
+  "score": 87,
+  "severity": "HIGH",
+  "status": "OPEN",
+  "opened_at": "2026-08-14T09:12:00",
+  "cycle": {
+    "allocated_kg": 12000.0,
+    "dispatched_kg": 12000.0,
+    "weighed_kg": 11015.0,
+    "dispensed_kg": 10980.0,
+    "variance_dispatch_to_receipt": -8.21,
+    "variance_receipt_to_counter": -0.32
+  },
+  "gap_hop": "dispatch_to_receipt",
+  "coverage_pct": 100,
+  "rulebook_version": "1.0.0",
+  "rule_hits": [
+    {
+      "rule_id": "weighing_variance",
+      "label": "Weighing shortfall beyond tolerance",
+      "raw_value": "-8.21%",
+      "threshold": "-5.0%",
+      "contribution": 30,
+      "severity": "high",
+      "status": "fired"
+    },
+    {
+      "rule_id": "delivery_gap",
+      "label": "Delivery-to-dispatch gap exceeded",
+      "raw_value": "61 hrs",
+      "threshold": "48 hrs",
+      "contribution": 25,
+      "severity": "high",
+      "status": "fired"
+    },
+    {
+      "rule_id": "gps_deviation",
+      "label": "Vehicle deviated from registered route",
+      "raw_value": "3.4 km",
+      "threshold": "2.0 km",
+      "contribution": 22,
+      "severity": "high",
+      "status": "fired"
+    },
+    {
+      "rule_id": "counter_variance",
+      "label": "Shortfall between shop receipt and counter dispensing",
+      "raw_value": "-0.32%",
+      "threshold": "-5.0%",
+      "contribution": 0,
+      "severity": "high",
+      "status": "passed"
+    },
+    {
+      "rule_id": "transaction_mismatch",
+      "label": "Transactions inconsistent with ration-card count",
+      "raw_value": "0.88",
+      "threshold": "0.6",
+      "contribution": 0,
+      "severity": "medium",
+      "status": "passed"
+    },
+    {
+      "rule_id": "operating_hours",
+      "label": "Irregular shop operating hours",
+      "raw_value": "1",
+      "threshold": "3",
+      "contribution": 0,
+      "severity": "low",
+      "status": "passed"
+    }
+  ],
+  "complaint_bonus": {
+    "count": 7,
+    "window_days": 14,
+    "contribution": 10
+  },
+  "complaints": [
+    {
+      "id": 1,
+      "filed_at": "2026-08-10T21:10:00",
+      "source": "portal",
+      "category": "epos_failure",
+      "text": "ePoS machine reported failure but the entitlement was marked issued.",
+      "status": "closed"
+    },
+    {
+      "id": 5,
+      "filed_at": "2026-08-09T19:33:00",
+      "source": "walk_in",
+      "category": "epos_failure",
+      "text": "ePoS machine reported failure but the entitlement was marked issued.",
+      "status": "open"
+    },
+    {
+      "id": 4,
+      "filed_at": "2026-08-03T22:40:00",
+      "source": "portal",
+      "category": "shop_closed",
+      "text": "Shop found closed during notified distribution hours.",
+      "status": "closed"
+    },
+    {
+      "id": 2,
+      "filed_at": "2026-08-03T15:14:00",
+      "source": "walk_in",
+      "category": "refused_entitlement",
+      "text": "Entitlement refused despite a valid ration card.",
+      "status": "open"
+    },
+    {
+      "id": 3,
+      "filed_at": "2026-08-03T12:42:00",
+      "source": "helpline",
+      "category": "short_weight",
+      "text": "Received less than the entitled quantity; dealer refused to re-weigh.",
+      "status": "open"
+    },
+    {
+      "id": 7,
+      "filed_at": "2026-08-03T12:30:00",
+      "source": "portal",
+      "category": "quality",
+      "text": "Grain issued was of poor quality and partly spoiled.",
+      "status": "open"
+    },
+    {
+      "id": 6,
+      "filed_at": "2026-07-31T13:48:00",
+      "source": "portal",
+      "category": "epos_failure",
+      "text": "ePoS machine reported failure but the entitlement was marked issued.",
+      "status": "open"
+    }
+  ],
+  "statistical": {
+    "z_score": 1.66,
+    "confirms": false
+  },
+  "memo": "Shop #4521 flagged HIGH (87/100): weighing shortfall of 8.2% against a 5% tolerance, a 61-hour delivery gap against a 48-hour limit, and a 3.4 km route deviation. Corroborated by 7 complaints in the preceding 14 days."
+}

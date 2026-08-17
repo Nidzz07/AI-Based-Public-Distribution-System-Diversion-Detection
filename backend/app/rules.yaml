@@ -1,0 +1,65 @@
+version: "1.0.0"
+updated_by: "District Supply Office, Sitapur"
+
+severity_bands:
+  high: 75
+  medium: 50
+
+rules:
+  - id: weighing_variance
+    label: Weighing shortfall beyond tolerance
+    field: variance_dispatch_to_receipt
+    operator: lt
+    threshold: -5.0
+    unit: "%"
+    severity: high
+    weight: 30
+
+  - id: delivery_gap
+    label: Delivery-to-dispatch gap exceeded
+    field: delivery_gap_hours
+    operator: gt
+    threshold: 48
+    unit: "hrs"
+    severity: high
+    weight: 25
+
+  - id: gps_deviation
+    label: Vehicle deviated from registered route
+    field: gps_deviation_km
+    operator: gt
+    threshold: 2.0
+    unit: "km"
+    severity: high
+    weight: 22
+
+  - id: counter_variance
+    label: Shortfall between shop receipt and counter dispensing
+    field: variance_receipt_to_counter
+    operator: lt
+    threshold: -5.0
+    unit: "%"
+    severity: high
+    weight: 20
+
+  - id: transaction_mismatch
+    label: Transactions inconsistent with ration-card count
+    field: txn_card_ratio
+    operator: lt
+    threshold: 0.6
+    severity: medium
+    weight: 15
+
+  - id: operating_hours
+    label: Irregular shop operating hours
+    field: hour_violations_month
+    operator: gte
+    threshold: 3
+    severity: low
+    weight: 8
+
+corroboration:
+  complaint_bonus:
+    min_complaints: 3
+    window_days: 14
+    weight: 10
