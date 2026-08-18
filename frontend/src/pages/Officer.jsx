@@ -3,10 +3,21 @@ import { Link } from 'react-router-dom'
 
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import PageMotif from '../components/PageMotif.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { HOP_LABEL, SEVERITY_BORDER } from '../severity.js'
-import { CAPTION, CARD, CELL, CELL_MUTED, COLUMN_HEAD, FIELD, LABEL, ROW } from '../ui.js'
+import {
+  CAPTION,
+  CARD_INTERACTIVE,
+  CELL,
+  CELL_MUTED,
+  COLUMN_HEAD,
+  FIELD,
+  LABEL,
+  ROW,
+  SORT_HEAD,
+} from '../ui.js'
 
 // Column template shared by the header and every row, so the two cannot drift.
 // Track widths are multiples of 8. The two numeric columns are the narrow ones
@@ -32,8 +43,14 @@ function SortHeader({ label, field, sort, onSort, align = 'left' }) {
       type="button"
       onClick={() => onSort(field)}
       aria-pressed={active}
-      className={`${COLUMN_HEAD} ${align === 'right' ? 'text-right' : 'text-left'} ${
-        active ? 'text-ink' : 'hover:text-ink'
+      // SORT_HEAD carries the table-header type and the tertiary tier's hover
+      // underline, but deliberately no colour: exactly one colour class may
+      // reach this element. `text-ink` and `text-ink-secondary` have equal
+      // specificity, and Tailwind emits text-ink first, so a header carrying
+      // both would silently render muted however it was written — which is
+      // what the active state used to do.
+      className={`${SORT_HEAD} ${align === 'right' ? 'text-right' : 'text-left'} ${
+        active ? 'text-ink' : 'text-ink-secondary hover:text-ink'
       }`}
     >
       {label}
@@ -68,7 +85,12 @@ export default function Officer() {
   }, [cases, district, severity, sort])
 
   return (
-    <article>
+    // `isolate` is what keeps the motif's negative z-index inside this page.
+    // Without it the layer would sink behind the document background and stop
+    // being visible at all; with it, it paints under every card on the page.
+    <article className="relative isolate flex-1">
+      <PageMotif variant="officer" />
+
       <PageHeader
         title="Officer"
         note="Every open case, ranked by score. The list is the triage order — the top of it is where an inspector goes first."
@@ -137,9 +159,13 @@ export default function Officer() {
                     // already carries the colour, the Severity cell below is
                     // plain ink — encoding the same fact twice would spend the
                     // signal without adding anything.
-                    className={`${GRID} ${CARD} ${ROW} mt-2 border-l-4 ${
+                    // CARD_INTERACTIVE rather than CARD: this row goes
+                    // somewhere, so it lifts under the cursor. It changes no
+                    // border colour on hover, which is what keeps the severity
+                    // edge from being wiped out by the hover state.
+                    className={`${GRID} ${CARD_INTERACTIVE} ${ROW} mt-2 border-l-4 ${
                       SEVERITY_BORDER[item.severity]
-                    } transition-colors hover:bg-surface-sunk`}
+                    }`}
                   >
                     <span>
                       <span className="block text-body font-medium text-ink">

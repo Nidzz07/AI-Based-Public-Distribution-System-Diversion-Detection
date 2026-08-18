@@ -1,5 +1,6 @@
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import PageMotif from '../components/PageMotif.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag, { SeverityTag } from '../components/Tag.jsx'
 import { useApi } from '../hooks/useApi.js'
@@ -39,7 +40,11 @@ export default function Rulebook() {
   const ruleTotal = book ? book.rules.reduce((total, rule) => total + rule.weight, 0) : 0
 
   return (
-    <article>
+    // `isolate` keeps the motif's negative z-index inside this page, where it
+    // paints under every card rather than sinking behind the document ground.
+    <article className="relative isolate flex-1">
+      <PageMotif variant="rulebook" />
+
       <PageHeader
         title="Rulebook"
         note="The thresholds this district scores against. Held in rules.yaml, read at request time — editing the file changes the next score, with no code change."

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { apiFetch } from '../api.js'
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import PageMotif from '../components/PageMotif.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag from '../components/Tag.jsx'
 import { useApi } from '../hooks/useApi.js'
@@ -89,7 +90,11 @@ export default function Auditor() {
   }
 
   return (
-    <article>
+    // `isolate` keeps the motif's negative z-index inside this page, where it
+    // paints under every card rather than sinking behind the document ground.
+    <article className="relative isolate flex-1">
+      <PageMotif variant="auditor" />
+
       <PageHeader
         title="Auditor"
         note="Every event ever written against a case, oldest first. Nothing here can be edited or removed — a recompute adds a row, it never rewrites one."

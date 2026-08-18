@@ -3,12 +3,13 @@ import { Link, useParams } from 'react-router-dom'
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import Ladder from '../components/Ladder.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import PageMotif from '../components/PageMotif.jsx'
 import { LoadingRegion, SkeletonPanel, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag, { StatusTag } from '../components/Tag.jsx'
 import TraceTable from '../components/TraceTable.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { HOP_LABEL, SEVERITY_BORDER } from '../severity.js'
-import { CAPTION, CARD, COLUMN_HEAD } from '../ui.js'
+import { BUTTON, CAPTION, CARD, COLUMN_HEAD } from '../ui.js'
 
 const DATE = new Intl.DateTimeFormat('en-IN', {
   day: 'numeric',
@@ -16,13 +17,29 @@ const DATE = new Intl.DateTimeFormat('en-IN', {
   year: 'numeric',
 })
 
+// This page has four exits — error, loading, empty and the real thing — and
+// all four are the same sheet with the same texture behind them. Wrapping them
+// once is what stops a later edit adding the motif to three of the four.
+//
+// `isolate` is what keeps the motif's negative z-index inside this page:
+// without it the layer sinks behind the document background and disappears;
+// with it, it paints under every card here.
+function Page({ children }) {
+  return (
+    <article className="relative isolate flex-1">
+      <PageMotif variant="case" />
+      {children}
+    </article>
+  )
+}
+
 export default function CaseDetail() {
   const { caseId } = useParams()
   const { data: detail, error, loading } = useApi(`/api/cases/${caseId}`)
 
   if (error) {
     return (
-      <article>
+      <Page>
         <PageHeader title="Case Detail" note={`Case ${caseId}`} />
         <div className="px-8 py-8">
           <ErrorState error={error}>
@@ -31,13 +48,13 @@ export default function CaseDetail() {
               : 'Start the backend with uvicorn app.main:app --reload --port 8000.'}
           </ErrorState>
         </div>
-      </article>
+      </Page>
     )
   }
 
   if (loading) {
     return (
-      <article>
+      <Page>
         <PageHeader title="Case Detail" note={`Case ${caseId}`} />
         <div className="space-y-8 px-8 py-8">
           <LoadingRegion label={`Loading case ${caseId}`}>
@@ -47,27 +64,27 @@ export default function CaseDetail() {
             </div>
           </LoadingRegion>
         </div>
-      </article>
+      </Page>
     )
   }
 
   if (!detail) {
     return (
-      <article>
+      <Page>
         <PageHeader title="Case Detail" note={`Case ${caseId}`} />
         <div className="px-8 py-8">
           <EmptyState title="This case came back empty">
             The API answered for {caseId} but returned no case body.
           </EmptyState>
         </div>
-      </article>
+      </Page>
     )
   }
 
   const { shop, complaint_bonus: bonus } = detail
 
   return (
-    <article>
+    <Page>
       <PageHeader
         title={shop.name}
         note={`Case ${detail.case_id} · Shop #${shop.id} · ${shop.block} · opened ${DATE.format(
@@ -76,10 +93,10 @@ export default function CaseDetail() {
       />
 
       <div className="space-y-8 px-8 py-8">
-        <Link
-          to="/"
-          className="inline-block text-body-secondary text-ink-secondary hover:text-ink"
-        >
+        {/* A back link is a secondary control, not a stray piece of underlined
+            prose — it gets the same bordered button every other secondary
+            action on the app uses. */}
+        <Link to="/" className={BUTTON}>
           ← All cases
         </Link>
 
@@ -192,7 +209,7 @@ export default function CaseDetail() {
           </p>
         </section>
       </div>
-    </article>
+    </Page>
   )
 }
 

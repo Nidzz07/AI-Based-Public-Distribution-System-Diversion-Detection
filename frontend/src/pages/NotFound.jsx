@@ -8,7 +8,7 @@ import { BUTTON, CARD } from '../ui.js'
 // band and content region as every other screen for exactly that reason.
 export default function NotFound() {
   return (
-    <article>
+    <article className="flex-1">
       <PageHeader
         title="No such screen"
         note="That route is not part of this build."

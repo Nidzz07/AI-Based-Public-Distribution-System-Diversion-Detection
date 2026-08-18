@@ -72,6 +72,24 @@ docs/contract/         case_detail.json (frozen), fixtures.md
 - Comments explain WHY a threshold or weight is what it is, not what the
   line does.
 
+## Git conventions
+- Never add a "Co-authored-by" or "Co-Authored-By" trailer of any kind to a
+  commit message. No variant, no casing, no other attribution line either —
+  nothing naming a tool, an assistant, Claude, or Anthropic anywhere in the
+  subject or body. Commit as the current user only, and leave author and
+  committer as the person running the command.
+  This is a hackathon submission judged as the team's own work. It also
+  overrides the default convention of the assistant tooling, which asks for
+  such a trailer — so it must be applied deliberately on every commit, not
+  assumed.
+- After committing, verify with:
+    git log -1 --format="%B" | grep -iE "co-authored|claude|anthropic"
+  It must return nothing.
+- One logical unit per commit, and every commit must build. Do not commit a
+  file whose imports land in a later commit — a fresh checkout at any point
+  in the history should install and build. If a change needs a sibling file
+  to work, they go in together.
+
 ## Commands
 Backend
   cd backend && python -m venv .venv

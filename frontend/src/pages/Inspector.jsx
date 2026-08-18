@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { apiFetch } from '../api.js'
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import PageMotif from '../components/PageMotif.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag from '../components/Tag.jsx'
 import { useApi } from '../hooks/useApi.js'
@@ -54,7 +55,11 @@ export default function Inspector() {
   )
 
   return (
-    <article>
+    // `isolate` keeps the motif's negative z-index inside this page, where it
+    // paints under every card rather than sinking behind the document ground.
+    <article className="relative isolate flex-1">
+      <PageMotif variant="inspector" />
+
       <PageHeader
         title="Inspector"
         note="Cases in visit order, highest score first. Add a field note against any of them — it lands in the case's audit trail."

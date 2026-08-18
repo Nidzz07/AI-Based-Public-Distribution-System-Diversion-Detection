@@ -35,7 +35,10 @@ function sentenceCase(text) {
 export default function Tag({ tone = 'neutral', children, className = '' }) {
   return (
     <span
-      className={`inline-block rounded px-2 py-1 text-meta-label ${
+      // transition-colors so a tag that swaps tone — the Inspector note
+      // outcome going from Recorded to Not recorded, say — crossfades rather
+      // than snapping. Same 150ms as every other state change in the app.
+      className={`inline-block rounded px-2 py-1 text-meta-label transition-colors duration-150 ease-out ${
         TONES[tone] ?? TONES.neutral
       } ${className}`}
     >

@@ -105,8 +105,15 @@ export default function Ladder({ cycle, gapHop }) {
       </p>
 
       {/* Scrolls rather than wraps: a ladder that wraps stops reading as a
-          single chain, which is the one thing it has to do. */}
-      <div className="mt-4 flex items-stretch overflow-x-auto pb-2">
+          single chain, which is the one thing it has to do.
+
+          bg-bg is not a visual change — it is the page ground, painted at the
+          same value it already had. It is here so the connector labels below,
+          which are the only text in the app that sits on bare ground rather
+          than on a card, have an opaque backing and the page motif cannot
+          reach them. The coral on a located gap is the lowest-contrast type
+          in the build; nothing is allowed to sit behind it. */}
+      <div className="mt-4 flex items-stretch overflow-x-auto bg-bg pb-2">
         {STAGES.map((stage, index) => (
           <div key={stage.key} className="flex items-stretch">
             <Node stage={stage} value={cycle[stage.key]} />
