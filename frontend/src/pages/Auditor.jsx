@@ -4,10 +4,11 @@ import { apiFetch } from '../api.js'
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
 import PageMotif from '../components/PageMotif.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag from '../components/Tag.jsx'
 import { useApi } from '../hooks/useApi.js'
-import { BUTTON_PRIMARY, CAPTION, CARD, CELL, COLUMN_HEAD, FIELD, LABEL, ROW } from '../ui.js'
+import { BUTTON_PRIMARY, CARD, CELL, COLUMN_HEAD, FIELD, LABEL, ROW } from '../ui.js'
 
 // F6 on screen: the append-only trail, and the claim that the score can be
 // re-derived from stored inputs at any later date.
@@ -101,7 +102,9 @@ export default function Auditor() {
       />
 
       <div className="space-y-8 px-8 py-8">
-        <div className="flex flex-wrap items-end gap-4">
+        {/* Plated: the Case label is text on bare ground, so the motif would
+            otherwise run behind it. */}
+        <div className="flex flex-wrap items-end gap-4 bg-bg">
           <label className="block">
             <span className={LABEL}>Case</span>
             <select
@@ -133,17 +136,21 @@ export default function Auditor() {
         {result ? <RecomputeResult result={result} /> : null}
 
         <section>
-          <h2 className="font-display text-section-heading text-navy">
-            Event trail — <span className="num">{caseId}</span>
-          </h2>
-
-          {trail && trail.length > 0 ? (
-            <p className={CAPTION}>
-              <span className="num">{trail.length}</span> events on this case, oldest first — the
-              order the server stored them in, not a client sort. Append-only: there is no code
-              path anywhere in this build that can edit or remove one.
-            </p>
-          ) : null}
+          <SectionHeading
+            title={
+              <>
+                Event trail — <span className="num">{caseId}</span>
+              </>
+            }
+          >
+            {trail && trail.length > 0 ? (
+              <>
+                <span className="num">{trail.length}</span> events on this case, oldest first — the
+                order the server stored them in, not a client sort. Append-only: there is no code
+                path anywhere in this build that can edit or remove one.
+              </>
+            ) : null}
+          </SectionHeading>
 
           {error ? (
             <div className="mt-4">
@@ -172,7 +179,10 @@ export default function Auditor() {
 
           {trail && trail.length > 0 ? (
             <>
-              <div className={`${GRID} mt-4 border-b border-border-strong px-4 pb-2`}>
+              {/* Plated for the same reason as the section heading: column
+                  labels on bare ground, and the timeline motif behind them
+                  reads as a rule struck through the top of the table. */}
+              <div className={`${GRID} mt-4 border-b border-border-strong bg-bg px-4 pb-2`}>
                 <span className={COLUMN_HEAD}>When</span>
                 <span className={COLUMN_HEAD}>Actor</span>
                 <span className={COLUMN_HEAD}>Event</span>

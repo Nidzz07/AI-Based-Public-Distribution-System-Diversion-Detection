@@ -66,7 +66,9 @@ export default function Inspector() {
       />
 
       <div className="px-8 py-8">
-        <div className="mb-6 flex flex-wrap items-end gap-4">
+        {/* Plated: the District label is text on bare ground, so the motif
+            would otherwise run behind it. */}
+        <div className="mb-6 flex flex-wrap items-end gap-4 bg-bg">
           <label className="block">
             <span className={LABEL}>District</span>
             <select
@@ -100,14 +102,15 @@ export default function Inspector() {
             {/* The list's caption. Says what the reader is looking at, how many
                 rows of it there are, and — out loud, not only in the deck —
                 that the order is score, not an optimised route. */}
-            <p className={`${CAPTION} mt-0`}>
+            <p className={`${CAPTION} mt-0 bg-bg`}>
               <span className="num">{visible.length}</span> of{' '}
               <span className="num">{cases.length}</span> cases, in visit order. Sorted by score,
               not by distance. Severity is the coloured edge on each row.
             </p>
 
             {visible.length > 0 ? (
-              <div className={`${GRID} mt-4 border-b border-border-strong px-4 pb-2`}>
+              // Plated for the same reason as the caption above it.
+              <div className={`${GRID} mt-4 border-b border-border-strong bg-bg px-4 pb-2`}>
                 <span className={COLUMN_HEAD}>Shop · what to look at</span>
                 <span className={`${COLUMN_HEAD} text-right`}>Score</span>
                 <span className={COLUMN_HEAD}>Severity</span>

@@ -97,7 +97,9 @@ export default function Officer() {
       />
 
       <div className="px-8 py-8">
-        <div className="mb-6 flex flex-wrap items-end gap-4">
+        {/* Plated: the filter labels are text on bare ground, so the motif
+            would otherwise run behind them. */}
+        <div className="mb-6 flex flex-wrap items-end gap-4 bg-bg">
           <Filter
             label="District"
             value={district}
@@ -128,13 +130,16 @@ export default function Officer() {
           <>
             {/* The table's caption. States in plain language what the reader is
                 looking at and how many rows of it there are. */}
-            <p className={`${CAPTION} mt-0`}>
+            <p className={`${CAPTION} mt-0 bg-bg`}>
               <span className="num">{visible.length}</span> of{' '}
               <span className="num">{cases.length}</span> shops, ranked by evidence. Severity is
               the coloured edge on each row.
             </p>
 
-            <div className={`${GRID} mt-4 border-b border-border-strong px-4 pb-2`}>
+            {/* Plated for the same reason as the caption above it: column
+                labels on bare ground, and a ruled motif behind them reads as a
+                line struck through the top of the table. */}
+            <div className={`${GRID} mt-4 border-b border-border-strong bg-bg px-4 pb-2`}>
               <SortHeader label="Shop" field="shop" sort={sort} onSort={setSort} />
               <span className={COLUMN_HEAD}>Gap located at</span>
               <SortHeader

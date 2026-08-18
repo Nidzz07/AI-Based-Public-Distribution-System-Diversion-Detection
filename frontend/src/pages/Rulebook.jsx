@@ -1,11 +1,12 @@
 import EmptyState, { ErrorState } from '../components/EmptyState.jsx'
 import PageHeader from '../components/PageHeader.jsx'
 import PageMotif from '../components/PageMotif.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
 import { LoadingRegion, SkeletonRows } from '../components/Skeleton.jsx'
 import Tag, { SeverityTag } from '../components/Tag.jsx'
 import { useApi } from '../hooks/useApi.js'
 import { OPERATOR_SYMBOL } from '../severity.js'
-import { CAPTION, CARD, CELL, CELL_MUTED, COLUMN_HEAD, ROW } from '../ui.js'
+import { CARD, CELL, CELL_MUTED, COLUMN_HEAD, ROW } from '../ui.js'
 
 // This is the page that makes the rulebook an officer's document rather than a
 // developer's config file. It renders app/rules.yaml as served, so an edit to
@@ -102,16 +103,18 @@ export default function Rulebook() {
             </section>
 
             <section>
-              <h2 className="font-display text-section-heading text-navy">Scoring rules</h2>
-              <p className={CAPTION}>
+              <SectionHeading title="Scoring rules">
                 Rulebook v<span className="num">{book.version}</span> ·{' '}
                 <span className="num">{book.rules.length}</span> rules ·{' '}
                 <span className="num">{ruleTotal}</span> points possible before the corroboration
-                bonus. Each rule reads one field, compares it to one threshold, and adds its
-                weight if the comparison holds.
-              </p>
+                bonus. Each rule reads one field, compares it to one threshold, and adds its weight
+                if the comparison holds.
+              </SectionHeading>
 
-              <div className={`${GRID} mt-4 border-b border-border-strong px-4 pb-2`}>
+              {/* Plated for the same reason as the heading: these labels sit on
+                  bare ground, and the ledger motif behind them would read as a
+                  rule struck through the top of the table. */}
+              <div className={`${GRID} mt-4 border-b border-border-strong bg-bg px-4 pb-2`}>
                 <span className={COLUMN_HEAD}>Rule</span>
                 <span className={COLUMN_HEAD}>Field read</span>
                 <span className={`${COLUMN_HEAD} text-right`}>Fires when</span>
@@ -146,16 +149,12 @@ export default function Rulebook() {
             </section>
 
             <section>
-              <h2 className="font-display text-section-heading text-navy">Corroboration</h2>
-              <p className={CAPTION}>
+              <SectionHeading title="Corroboration">
                 The one entry that is not a rule.{' '}
-                <span className="num">
-                  {book.corroboration.complaint_bonus.weight}
-                </span>{' '}
-                points, available once. Public complaints are not evidence of diversion on their
-                own: they add a bounded bonus to a case the ladder already built — they never
-                create one.
-              </p>
+                <span className="num">{book.corroboration.complaint_bonus.weight}</span> points,
+                available once. Public complaints are not evidence of diversion on their own: they
+                add a bounded bonus to a case the ladder already built — they never create one.
+              </SectionHeading>
 
               <div className={`${GRID} ${CARD} ${ROW} mt-4`}>
                 <span>

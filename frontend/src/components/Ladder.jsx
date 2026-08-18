@@ -1,5 +1,6 @@
 import { formatKg, formatPct } from '../severity.js'
-import { CAPTION, CARD, COLUMN_HEAD } from '../ui.js'
+import { CARD, COLUMN_HEAD } from '../ui.js'
+import SectionHeading from './SectionHeading.jsx'
 
 // The four-hop reconciliation ladder — the core insight on one line:
 // allocated -> dispatched -> weighed -> dispensed, with what was lost between
@@ -98,11 +99,10 @@ function Connector({ hop, cycle, located }) {
 export default function Ladder({ cycle, gapHop }) {
   return (
     <section>
-      <h2 className="font-display text-section-heading text-navy">Reconciliation ladder</h2>
-      <p className={CAPTION}>
+      <SectionHeading title="Reconciliation ladder">
         Four readings of the same consignment, from allocation order to counter. The gap is where
         they stop agreeing.
-      </p>
+      </SectionHeading>
 
       {/* Scrolls rather than wraps: a ladder that wraps stops reading as a
           single chain, which is the one thing it has to do.

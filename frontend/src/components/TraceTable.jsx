@@ -1,5 +1,6 @@
 import { TRACE_ROW } from '../severity.js'
-import { CAPTION, COLUMN_HEAD } from '../ui.js'
+import { COLUMN_HEAD } from '../ui.js'
+import SectionHeading from './SectionHeading.jsx'
 
 // The reasoning trace. Every rule the rulebook holds gets a row, including the
 // ones that passed and the ones we could not evaluate — the trace is a record
@@ -21,13 +22,15 @@ const GRID = 'grid grid-cols-[1fr_120px_120px_88px_96px] items-center gap-4'
 export default function TraceTable({ hits }) {
   return (
     <section>
-      <h2 className="font-display text-section-heading text-navy">Reasoning trace</h2>
-      <p className={CAPTION}>
+      <SectionHeading title="Reasoning trace">
         Every rule in the rulebook, what it read, and what it did about it — including the rules
         that passed and the ones there was no reading for.
-      </p>
+      </SectionHeading>
 
-      <div className={`${GRID} mt-4 border-b border-border-strong px-4 pb-2`}>
+      {/* bg-bg on the header row for the same reason the heading is plated: the
+          column labels sit on bare ground, and a ruled motif behind them reads
+          as a line struck through the table's top edge. */}
+      <div className={`${GRID} mt-4 border-b border-border-strong bg-bg px-4 pb-2`}>
         <span className={COLUMN_HEAD}>Rule</span>
         <span className={`${COLUMN_HEAD} text-right`}>Reading</span>
         <span className={`${COLUMN_HEAD} text-right`}>Threshold</span>

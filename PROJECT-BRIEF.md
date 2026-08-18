@@ -170,6 +170,10 @@ Stated proactively to judges as scoping decisions, not discovered as gaps:
 5. Inspector routing is score-sorted, not geographically optimised
 6. Memos are f-string templates — "template now, LLM later"
 7. Headline statistics (28%, 1-in-5, 4-6 months, 5x) are illustrative
+8. Card border tokens (border-strong #C7C2B6, border #DDD9D0) read below
+   WCAG 1.4.11's 3:1 non-text contrast threshold against the cream
+   background; interactive state is instead conveyed by full fill inversion
+   on hover/focus, which clears contrast comfortably.
 
 ## Out of scope
 Deployment, auth, real data integration, mobile app, notifications,

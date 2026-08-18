@@ -21,13 +21,22 @@ import { LogoMark } from './Logo.jsx'
 //      floor one future tweak breaks. ink-muted (#94989E) would not clear it
 //      at any opacity including zero, but ink-muted only ever appears inside
 //      a card, and cards are opaque (see 3).
-//   2. The layer is masked to fade in over the first 200px, so the page header
-//      band — title, note and its hairline — always sits on bare ground.
+//   2. The layer is masked to fade in over the first 200px, which softens the
+//      texture under the page header band but does NOT clear it: the band runs
+//      to roughly 112px, where the mask is still better than half open. The
+//      fade is a gradient, not a cutoff, so it cannot be what protects text.
+//      Occlusion does that — see 3.
 //   3. The layer sits at z-index -10 inside the page's own `isolate` stacking
-//      context. Negative z paints BEFORE descendant backgrounds, so every
-//      bg-surface card, table row and panel covers the motif completely. The
-//      texture is only ever visible in the empty space around content, which
-//      is the only place it is allowed to be.
+//      context. Negative z paints BEFORE descendant backgrounds, so anything
+//      with an opaque background covers the motif completely. That is why
+//      every container holding text carries one: bg-surface on cards and rows,
+//      bg-bg on the header band, the section headings (SectionHeading.jsx),
+//      the table header rows, the filter bars and the ladder's connector
+//      strip. Text NEVER sits on the bare layer — a watermark between the
+//      letterforms of a heading is the failure this rule exists to prevent.
+//      What is left for the texture is the true empty space: the gutters
+//      between cards, the gaps between sections, and the tail below the last
+//      row. That is the only place it is allowed to be.
 //
 // One component with a `variant` prop rather than five hand-rolled
 // backgrounds, so those three rules have exactly one place to be broken.
