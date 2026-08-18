@@ -174,6 +174,18 @@ Stated proactively to judges as scoping decisions, not discovered as gaps:
    WCAG 1.4.11's 3:1 non-text contrast threshold against the cream
    background; interactive state is instead conveyed by full fill inversion
    on hover/focus, which clears contrast comfortably.
+9. Coral text on the reconciliation ladder's located-hop labels (#D4573D on
+   the cream background — the variance figures at 14px medium and the "gap
+   located" label at 12px) reads 3.79:1, below WCAG AA's 4.5:1 threshold for
+   text. Neither size qualifies as large text, so 4.5:1 is the applicable
+   floor. This is a locked brand token; the finding is documented rather than
+   silently patched. The label never carries colour alone — it is always read
+   with its text.
+10. Ink-muted text on skipped trace rows (#94989E on the sunk row ground
+    #F3F0EA) reads 2.55:1, below WCAG AA. It reads 2.90:1 where ink-muted
+    sits on a white card instead. Same status — locked token, documented
+    rather than patched. A skipped row's meaning is carried by its "Skipped"
+    text label, not by the muting.
 
 ## Out of scope
 Deployment, auth, real data integration, mobile app, notifications,
