@@ -1,4 +1,4 @@
-export const ROLES = ['Officer', 'Inspector', 'Auditor']
+import { ROLES } from '../roles.js'
 
 // Inline so the app ships no icon dependency and the stroke can inherit the
 // palette. pointer-events-none keeps clicks falling through to the select.
@@ -19,9 +19,12 @@ function Chevron() {
   )
 }
 
-// This is a dropdown, not authentication. It swaps a piece of local state and
-// nothing else — declared to judges as a scoping decision, so the label says
-// so out loud rather than implying a permission model that is not there.
+// This is a dropdown, not authentication. Changing it re-filters the sidebar
+// and, if the current screen belongs to another role, moves the reader to
+// their own — wayfinding, and nothing beyond it. No data is withheld, no
+// screen is sealed, and the switcher itself is open to anyone looking at it.
+// Declared to judges as a scoping decision, so the label says "Viewing as"
+// rather than implying a permission model that is not there.
 export default function TopBar({ role, onRoleChange }) {
   return (
     <header className="flex h-topbar shrink-0 items-center justify-between border-b border-border bg-surface px-8">

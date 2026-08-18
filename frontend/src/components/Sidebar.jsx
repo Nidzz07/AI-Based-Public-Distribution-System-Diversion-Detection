@@ -1,15 +1,21 @@
 import { NavLink } from 'react-router-dom'
 
-// Case Detail points at the demo case. Once the officer list is real it will
-// be reached by clicking a row; it stays in the nav for now so the shell can
+import { ROLE_NAV } from '../roles.js'
+import { Logo } from './Logo.jsx'
+
+// The nav is per role and lives in roles.js — three items for every role: that
+// role's own workspace screen, then Case Detail and the Rulebook, which all
+// three roles read. Only the first item changes with the role; the other two
+// are the same links on every list, because every role opens cases and every
+// role has reason to check the document the scores were derived from.
+//
+// Case Detail points at the demo case; once the officer list is real it will be
+// reached by clicking a row, and it stays in the nav for now so the shell can
 // be walked end to end.
-const NAV_ITEMS = [
-  { to: '/', label: 'Officer', end: true },
-  { to: '/cases/C-0041', label: 'Case Detail', end: false },
-  { to: '/rulebook', label: 'Rulebook', end: false },
-  { to: '/inspector', label: 'Inspector', end: false },
-  { to: '/auditor', label: 'Auditor', end: false },
-]
+//
+// Filtering here is wayfinding, not access control: a screen that is off this
+// list is still reachable by typing its address, and nothing about the data
+// behind it changes with the role.
 
 function navClasses({ isActive }) {
   // Green edge bar plus a green-tinted ground. This is a navigation
@@ -23,19 +29,18 @@ function navClasses({ isActive }) {
     : `${base} border-transparent text-white/60 hover:border-white/20 hover:text-white`
 }
 
-export default function Sidebar() {
+export default function Sidebar({ role }) {
   return (
     <aside className="flex w-sidebar shrink-0 flex-col bg-navy">
       <div className="flex h-topbar items-center px-6">
-        {/* section-heading carries its own 600 weight, so font-semibold is not
-            repeated here — the named size token IS the whole style. */}
-        <span className="font-display text-section-heading tracking-wide text-white">
-          LEAKPROOF
-        </span>
+        {/* Mark and wordmark together. The mark draws in currentColor, so on
+            this navy ground it inherits the white the wordmark already used —
+            the same drawing that renders navy on the sign-in screen's cream. */}
+        <Logo className="text-white" />
       </div>
 
       <nav className="flex flex-col gap-1 py-4">
-        {NAV_ITEMS.map((item) => (
+        {(ROLE_NAV[role] ?? []).map((item) => (
           <NavLink key={item.to} to={item.to} end={item.end} className={navClasses}>
             {item.label}
           </NavLink>
